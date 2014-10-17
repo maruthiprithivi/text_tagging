@@ -1,7 +1,7 @@
 library(tm)
 library(gtools)
 library(textir)
-setwd("/Users/maruthi/Desktop/")
+setwd("<Directory Path>")
 dataBL = read.csv("XX", header = TRUE)
 dataTP = read.csv("XX", header = TRUE)
 dataBL = na.omit(dataBL)
@@ -14,12 +14,13 @@ dataBLTP = smartbind(dataBL, dataTP)
 #    paste(toupper(substring(s, 1, 1)), substring(s, 2),
 #          sep = "", collapse = " ")
 #}
+# To standardize tags
 dataBLTP[7] = toupper(dataBLTP$Noise_Type)
-dataBLTP[7] = sub("^CONG.*","CONGREGATION NOISE", dataBLTP$Noise_Type)
-dataBLTP[7] = sub("^EVE.*","EVENT NOISE", dataBLTP$Noise_Type)
-dataBLTP[7] = sub("^F.*","FOODCOURT NOISE", dataBLTP$Noise_Type)
-dataBLTP[7] = sub("^NEIG.*","NEIGHBOUR NOISE", dataBLTP$Noise_Type)
-corpusBLTP = Corpus(VectorSource(dataBLTP$MSG))
+dataBLTP[7] = sub("^CONG.*","CONGREGATION", dataBLTP$Type)
+dataBLTP[7] = sub("^EVE.*","EVENT", dataBLTP$Type)
+dataBLTP[7] = sub("^F.*","FOODCOURT", dataBLTP$Type)
+dataBLTP[7] = sub("^NEIG.*","NEIGHBOUR", dataBLTP$Type)
+corpusBLTP = Corpus(VectorSource(dataBLTP$MG))
 #corpusBL = Corpus(VectorSource(dataBL$MSG))
 #corpusTP = Corpus(VectorSource(dataTP$MSG))
 corpusBLTP = tm_map(corpusBLTP , tolower)
@@ -62,13 +63,7 @@ corpusLDA = LDA(corpusDTM, )
 
 #####################   SCRATCH GROUND ########################
 
-dataBLTP = sub("^CONG.*","CONGREGATION NOISE", dataBLTP)
-test3 = sub("^Congre.* n.*","Congregation Noise", test2)
-table(test)
-table(test2)
-table(test3)
-replace(test, grepl("^Congre.*", test), "Congregation Noise")
-test <- gsub( "Congregation | Congregations", "Congregation Noise", test)
+
 
 
 
