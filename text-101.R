@@ -6,8 +6,8 @@ dataBL = read.csv("XX", header = TRUE)
 dataTP = read.csv("XX", header = TRUE)
 dataBL = na.omit(dataBL)
 dataTP = na.omit(dataTP)
-colnames(dataTP) = c("INC_ID", "EDATE", "ETIME", "INC_TYPE", "MSG", "PCODE" ,"Noise_Type")
-colnames(dataBL) = c("INC_ID", "EDATE", "ETIME", "INC_TYPE", "MSG", "PCODE" ,"Noise_Type")
+colnames(dataTP) = c("I_I", "ED", "ET", "I_T", "MG", "PC" ,"N_T")
+colnames(dataBL) = c("I_I", "ED", "ET", "I_T", "MG", "PC" ,"N_T")
 dataBLTP = smartbind(dataBL, dataTP)
 #.simpleCap <- function(x) {
 #    s <- strsplit(x, " ")[[1]]
@@ -16,10 +16,7 @@ dataBLTP = smartbind(dataBL, dataTP)
 #}
 # To standardize tags
 dataBLTP[7] = toupper(dataBLTP$Noise_Type)
-dataBLTP[7] = sub("^CONG.*","CONGREGATION", dataBLTP$Type)
-dataBLTP[7] = sub("^EVE.*","EVENT", dataBLTP$Type)
-dataBLTP[7] = sub("^F.*","FOODCOURT", dataBLTP$Type)
-dataBLTP[7] = sub("^NEIG.*","NEIGHBOUR", dataBLTP$Type)
+dataBLTP[7] = sub("^F.*","FOO", dataBLTP$Type)
 corpusBLTP = Corpus(VectorSource(dataBLTP$MG))
 #corpusBL = Corpus(VectorSource(dataBL$MSG))
 #corpusTP = Corpus(VectorSource(dataTP$MSG))
@@ -65,8 +62,3 @@ corpusLDA = LDA(corpusDTM, )
 
 
 
-
-
-
-test4 = sub("^Neighb.* n.*","Neighbourly Noise", test3)
-table(test4)
